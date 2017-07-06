@@ -6,39 +6,59 @@ import java.awt.*;
 
 public class ClockPanel extends JPanel
 {
+	private Point center;
+	private double scale;
+	
 	public ClockPanel()
 	{
 		super();
-
+		
+		center = new Point(200,200);
+		scale = 1;
+		
 		Timer timer = new Timer();
 		timer.scheduleAtFixedRate(new ClockTimerTask(),0,50);
 	}
-
+	
+	public void setScale(int r)
+	{
+		scale = r / (double)200;
+	}
+	
+	public void setCenter(int cx, int cy)
+	{
+		center = new Point(cx,cy);
+	}
+	
 	public void update()
 	{
 		repaint();
 	}
-
+	
 	public void paint(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
 		super.setOpaque(false); //îwåiÇìßñæÇ…
 		super.paint(g);
 
-		int rs = 180;
-		int rm = 120;
-		int rh = 80;
+		int rs = (int)(scale*180);
+		int rm = (int)(scale*120);
+		int rh = (int)(scale*80);
+		int rc = (int)(scale*190);
 
 		Calendar now = Calendar.getInstance();
-
+	
+		int msec = now.get(Calendar.MILLISECOND);
 		int sec = now.get(Calendar.SECOND);
 		int min = now.get(Calendar.MINUTE);
 		int hour = now.get(Calendar.HOUR);
-
+		
+		double tms = 2*Math.PI*((msec-250)%1000)/1000;
 		double ts = 2*Math.PI*((sec-15)%60)/60; //É∆s
 		double tm = 2*Math.PI*((min-15)%60)/60;
 		double th = 2*Math.PI*((hour-3)%12)/12;
-
+		
+		ts += tms/60;
 		tm += ts/60; //Sec, Min Ç…ÇÊÇÈêjà íuÇÃï‚ê≥
 		th += tm/12;
 
@@ -46,13 +66,13 @@ public class ClockPanel extends JPanel
 		g2.setStroke(new BasicStroke(2.0f)); //ê¸ÇÃëæÇ≥ÇïœçX
 
 		g.setColor(new Color(255,255,255,63)); //îíÇ≈îºìßñæ
-		g.fillOval(10,10,380,380);
+		g.fillOval(center.x-rc,center.y-rc,rc*2,rc*2);
 		g.setColor(new Color(0,0,0,255));
-		g.drawOval(10,10,380,380);
+		g.drawOval(center.x-rc,center.y-rc,rc*2,rc*2);
 
-		g.drawLine(200,200,(int)(rs*Math.cos(ts))+200,(int)(rs*Math.sin(ts))+200);
-		g.drawLine(200,200,(int)(rm*Math.cos(tm))+200,(int)(rm*Math.sin(tm))+200);
-		g.drawLine(200,200,(int)(rh*Math.cos(th))+200,(int)(rh*Math.sin(th))+200);
+		g.drawLine(center.x,center.y,(int)(rs*Math.cos(ts))+center.x,(int)(rs*Math.sin(ts))+center.y);
+		g.drawLine(center.x,center.y,(int)(rm*Math.cos(tm))+center.x,(int)(rm*Math.sin(tm))+center.y);
+		g.drawLine(center.x,center.y,(int)(rh*Math.cos(th))+center.x,(int)(rh*Math.sin(th))+center.y);
 	}
 
 	class ClockTimerTask extends TimerTask

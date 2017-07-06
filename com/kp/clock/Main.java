@@ -24,6 +24,9 @@ public class Main
 		frame.setBackground(new Color(0,0,0,0)); //RGBA 黒で完全に透明
 		frame.setAlwaysOnTop(true);
 		
+		clockPanel.setScale(200);
+		clockPanel.setCenter(200,200);
+		
 		frame.add(clockPanel);
 		frame.addMouseListener(frameMouseListener);
 		frame.addMouseMotionListener(frameMouseListener);
@@ -50,7 +53,7 @@ public class Main
 		{
 			if(btn == e.BUTTON3)
 			{
-				popupMenu.show(e.getComponent(),e.getX(),e.getY());
+				popupMenu.show(e.getComponent(),e.getX(),e.getY());//クリックされた位置にメニューを表示
 			}
 		}
 		
