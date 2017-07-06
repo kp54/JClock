@@ -8,6 +8,7 @@ public class ClockPanel extends JPanel
 {
 	private Point center;
 	private double scale;
+	private double opacity;
 	
 	public ClockPanel()
 	{
@@ -15,9 +16,15 @@ public class ClockPanel extends JPanel
 		
 		center = new Point(200,200);
 		scale = 1;
+		opacity = 0.25;
 		
 		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new ClockTimerTask(),0,50);
+		timer.scheduleAtFixedRate(new ClockTimerTask(),0,20);
+	}
+	
+	public void setOpacity(double o)
+	{
+		opacity = o;
 	}
 	
 	public void setScale(int r)
@@ -65,7 +72,7 @@ public class ClockPanel extends JPanel
 		g.clearRect(0,0,400,400);
 		g2.setStroke(new BasicStroke(2.0f)); //ê¸ÇÃëæÇ≥ÇïœçX
 
-		g.setColor(new Color(255,255,255,63)); //îíÇ≈îºìßñæ
+		g.setColor(new Color(255,255,255,(int)(255*opacity)));
 		g.fillOval(center.x-rc,center.y-rc,rc*2,rc*2);
 		g.setColor(new Color(0,0,0,255));
 		g.drawOval(center.x-rc,center.y-rc,rc*2,rc*2);
