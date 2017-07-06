@@ -6,12 +6,18 @@ import java.awt.event.*;
 
 public class Main
 {
+	private static JPopupMenu popupMenu;
+	
 	public static void main(String[] args)
 	{
 		ClockPanel clockPanel = new ClockPanel();
 		FrameMouseListener frameMouseListener = new FrameMouseListener();
+		MenuMouseListener menuMouseListener = new MenuMouseListener();
+		popupMenu = new JPopupMenu();
+		JMenuItem closeMenuItem = new JMenuItem("Close");
 		JFrame frame = new JFrame();
 		
+		frame.setName("frame");
 		frame.setTitle("Clock");
 		frame.setSize(400,400);
 		frame.setUndecorated(true); //フレームを消す
@@ -21,6 +27,10 @@ public class Main
 		frame.add(clockPanel);
 		frame.addMouseListener(frameMouseListener);
 		frame.addMouseMotionListener(frameMouseListener);
+		
+		closeMenuItem.setName("closeMenuItem");
+		closeMenuItem.addMouseListener(menuMouseListener);
+		popupMenu.add(closeMenuItem);
 		
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,13 +50,13 @@ public class Main
 		{
 			if(btn == e.BUTTON3)
 			{
-				System.exit(0);
+				popupMenu.show(e.getComponent(),e.getX(),e.getY());
 			}
 		}
 		
 		public void mousePressed(MouseEvent e)
 		{
-			btn=e.getButton(); //押されてるボタンをメモ
+			btn = e.getButton(); //押されてるボタンをメモ
 			if(btn == e.BUTTON1)
 			{
 				prevPos = e.getPoint(); //移動前のマウス座標を取得
@@ -69,5 +79,29 @@ public class Main
 		}
 		
 		public void mouseMoved(MouseEvent e){}
+	}
+	
+	static class MenuMouseListener implements MouseListener
+	{
+		public MenuMouseListener()
+		{
+			super();
+		}
+		
+		public void mouseClicked(MouseEvent e){}
+		
+		public void mousePressed(MouseEvent e)
+		{
+			if((e.getButton() == e.BUTTON1)&&(e.getComponent().getName()=="closeMenuItem"))
+			{
+				System.exit(0);
+			}
+		}
+		
+		public void mouseReleased(MouseEvent e){}
+		
+		public void mouseEntered(MouseEvent e){}
+		
+		public void mouseExited(MouseEvent e){}
 	}
 }
