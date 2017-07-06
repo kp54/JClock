@@ -12,9 +12,10 @@ public class Main
 	{
 		ClockPanel clockPanel = new ClockPanel();
 		FrameMouseListener frameMouseListener = new FrameMouseListener();
-		MenuMouseListener menuMouseListener = new MenuMouseListener();
+		MenuActionListener menuActionListener = new MenuActionListener();
 		popupMenu = new JPopupMenu();
 		JMenuItem closeMenuItem = new JMenuItem("Close");
+		JCheckBoxMenuItem alwaysOnTopCBMenuItem = new JCheckBoxMenuItem("Always on top");
 		JFrame frame = new JFrame();
 		
 		frame.setName("frame");
@@ -31,15 +32,19 @@ public class Main
 		frame.addMouseListener(frameMouseListener);
 		frame.addMouseMotionListener(frameMouseListener);
 		
-		closeMenuItem.setName("closeMenuItem");
-		closeMenuItem.addMouseListener(menuMouseListener);
+		closeMenuItem.addActionListener(menuActionListener);
+		alwaysOnTopCBMenuItem.addActionListener(menuActionListener);
+		alwaysOnTopCBMenuItem.setState(true);
+		
+		popupMenu.add(alwaysOnTopCBMenuItem);
 		popupMenu.add(closeMenuItem);
 		
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	static class FrameMouseListener implements MouseListener,MouseMotionListener //2種のMouseListenerをまとめて実装(良いのかこれ)
+	static class FrameMouseListener implements MouseListener,MouseMotionListener
+	//2種のMouseListenerをまとめて実装(良いのかこれ)
 	{
 		private Point prevPos;
 		private int btn;
@@ -77,34 +82,37 @@ public class Main
 			if(btn == MouseEvent.BUTTON1) //メモを参照 (何故かこのメソッドからgetButton()すると通らなかった)
 			{
 				Point pos = e.getPoint(); //移動後のマウス座標を取得
-				e.getComponent().setLocation(e.getComponent().getX()+pos.x-prevPos.x,e.getComponent().getY()+pos.y-prevPos.y); //マウスの移動分だけ移動
+				e.getComponent().setLocation(e.getComponent().getX()+pos.x-prevPos.x,e.getComponent().getY()+pos.y-prevPos.y);
+				//マウスの移動分だけ移動
 			}
 		}
 		
 		public void mouseMoved(MouseEvent e){}
 	}
 	
-	static class MenuMouseListener implements MouseListener
+	static class MenuActionListener implements ActionListener
 	{
-		public MenuMouseListener()
+		public MenuActionListener()
 		{
 			super();
 		}
 		
-		public void mouseClicked(MouseEvent e){}
-		
-		public void mousePressed(MouseEvent e)
+		public void actionPerformed(ActionEvent e)
 		{
-			if((e.getButton() == e.BUTTON1)&&(e.getComponent().getName()=="closeMenuItem"))
+			switch(e.getActionCommand())
 			{
-				System.exit(0);
+				case "Close":
+					System.exit(0);
+					break;
+				
+				case "Always on top":
+					((JFrame)(((JPopupMenu)(((JCheckBoxMenuItem)(e.getSource())).getParent())).getInvoker())).setAlwaysOnTop(((JCheckBoxMenuItem)(e.getSource())).getState());
+					//alwaysOnTopCBMenuItemを取得->popupMenuを取得->frameを取得.
+					//alwaysOnTopCBMenuItemを取得->stateを取得
+					//frame.setAlwaysOnTop(state);
+					//なにこれ
+					break;
 			}
 		}
-		
-		public void mouseReleased(MouseEvent e){}
-		
-		public void mouseEntered(MouseEvent e){}
-		
-		public void mouseExited(MouseEvent e){}
 	}
 }
