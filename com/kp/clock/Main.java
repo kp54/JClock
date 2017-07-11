@@ -31,7 +31,7 @@ public class Main
 		frame.setName("frame");
 		frame.setTitle("Clock");
 		frame.setSize(400,400);
-		frame.setUndecorated(true); //ƒtƒŒ[ƒ€‚ğÁ‚·
+		frame.setUndecorated(true); //ãƒ•ãƒ¬ãƒ¼ãƒ ã‚’æ¶ˆã™
 		frame.setBackground(new Color(0,0,0,0)); //RGBA
 		frame.setAlwaysOnTop(true);
 		
@@ -77,7 +77,7 @@ public class Main
 	}
 	
 	static class FrameMouseListener implements MouseListener,MouseMotionListener
-	//2í‚ÌMouseListener‚ğ‚Ü‚Æ‚ß‚ÄÀ‘•(—Ç‚¢‚Ì‚©‚±‚ê)
+	//2ç¨®ã®MouseListenerã‚’ã¾ã¨ã‚ã¦å®Ÿè£…(è‰¯ã„ã®ã‹ã“ã‚Œ)
 	{
 		private Point prevPos;
 		private int btn;
@@ -91,16 +91,16 @@ public class Main
 		{
 			if(btn == e.BUTTON3)
 			{
-				popupMenu.show(frame,e.getX(),e.getY());//ƒNƒŠƒbƒN‚³‚ê‚½ˆÊ’u‚Éƒƒjƒ…[‚ğ•\¦
+				popupMenu.show(frame,e.getX(),e.getY());//ã‚¯ãƒªãƒƒã‚¯ã•ã‚ŒãŸä½ç½®ã«ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’è¡¨ç¤º
 			}
 		}
 		
 		public void mousePressed(MouseEvent e)
 		{
-			btn = e.getButton(); //‰Ÿ‚³‚ê‚Ä‚éƒ{ƒ^ƒ“‚ğƒƒ‚
+			btn = e.getButton(); //æŠ¼ã•ã‚Œã¦ã‚‹ãƒœã‚¿ãƒ³ã‚’ãƒ¡ãƒ¢
 			if(btn == e.BUTTON1)
 			{
-				prevPos = e.getPoint(); //ˆÚ“®‘O‚Ìƒ}ƒEƒXÀ•W‚ğæ“¾
+				prevPos = e.getPoint(); //ç§»å‹•å‰ã®ãƒã‚¦ã‚¹åº§æ¨™ã‚’å–å¾—
 			}
 		}
 		
@@ -112,11 +112,11 @@ public class Main
 		
 		public void mouseDragged(MouseEvent e)
 		{
-			if(btn == MouseEvent.BUTTON1) //ƒƒ‚‚ğQÆ (‰½ŒÌ‚©‚±‚Ìƒƒ\ƒbƒh‚©‚çgetButton()‚·‚é‚Æ’Ê‚ç‚È‚©‚Á‚½)
+			if(btn == MouseEvent.BUTTON1) //ãƒ¡ãƒ¢ã‚’å‚ç…§ (ä½•æ•…ã‹ã“ã®ãƒ¡ã‚½ãƒƒãƒ‰ã‹ã‚‰getButton()ã™ã‚‹ã¨é€šã‚‰ãªã‹ã£ãŸ)
 			{
-				Point pos = e.getPoint(); //ˆÚ“®Œã‚Ìƒ}ƒEƒXÀ•W‚ğæ“¾
+				Point pos = e.getPoint(); //ç§»å‹•å¾Œã®ãƒã‚¦ã‚¹åº§æ¨™ã‚’å–å¾—
 				frame.setLocation(frame.getX()+pos.x-prevPos.x,frame.getY()+pos.y-prevPos.y);
-				//ƒ}ƒEƒX‚ÌˆÚ“®•ª‚¾‚¯ˆÚ“®
+				//ãƒã‚¦ã‚¹ã®ç§»å‹•åˆ†ã ã‘ç§»å‹•
 			}
 		}
 		
@@ -140,7 +140,7 @@ public class Main
 				
 				case "Always on top":
 					frame.setAlwaysOnTop(((JCheckBoxMenuItem)(e.getSource())).getState());
-					//alwaysOnTopCBMenuItem‚ğæ“¾->state‚ğæ“¾
+					//alwaysOnTopCBMenuItemã‚’å–å¾—->stateã‚’å–å¾—
 					break;
 			}
 		}

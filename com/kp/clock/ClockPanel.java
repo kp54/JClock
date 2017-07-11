@@ -45,7 +45,7 @@ public class ClockPanel extends JPanel
 	public void paint(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
-		super.setOpaque(false); //”wŒi‚ğ“§–¾‚É
+		super.setOpaque(false); //èƒŒæ™¯ã‚’é€æ˜ã«
 		super.paint(g);
 
 		int rs = (int)(scale*180);
@@ -61,16 +61,16 @@ public class ClockPanel extends JPanel
 		int hour = now.get(Calendar.HOUR);
 		
 		double tms = 2*Math.PI*((msec-250)%1000)/1000;
-		double ts = 2*Math.PI*((sec-15)%60)/60; //ƒÆs
+		double ts = 2*Math.PI*((sec-15)%60)/60; //Î¸s
 		double tm = 2*Math.PI*((min-15)%60)/60;
 		double th = 2*Math.PI*((hour-3)%12)/12;
 		
 		ts += tms/60;
-		tm += ts/60; //Sec, Min ‚É‚æ‚éjˆÊ’u‚Ì•â³
+		tm += ts/60; //Sec, Min ã«ã‚ˆã‚‹é‡ä½ç½®ã®è£œæ­£
 		th += tm/12;
 
 		g.clearRect(0,0,400,400);
-		g2.setStroke(new BasicStroke(2.0f)); //ü‚Ì‘¾‚³‚ğ•ÏX
+		g2.setStroke(new BasicStroke(2.0f)); //ç·šã®å¤ªã•ã‚’å¤‰æ›´
 
 		g.setColor(new Color(255,255,255,(int)(255*opacity)));
 		g.fillOval(center.x-rc,center.y-rc,rc*2,rc*2);
