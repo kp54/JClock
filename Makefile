@@ -1,5 +1,5 @@
 com/kp/clock/Main.class: com/kp/clock/Main.java com/kp/clock/ClockPanel.java
-	javac com/kp/clock/Main.java
+	javac -encoding UTF-8 com/kp/clock/Main.java
 
 .PHONY:run
 run:
