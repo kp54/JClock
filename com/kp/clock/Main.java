@@ -89,7 +89,7 @@ public class Main
 		
 		public void mouseClicked(MouseEvent e)
 		{
-			if(btn == e.BUTTON3)
+			if(btn == MouseEvent.BUTTON3)
 			{
 				popupMenu.show(frame,e.getX(),e.getY());//クリックされた位置にメニューを表示
 			}
@@ -98,7 +98,7 @@ public class Main
 		public void mousePressed(MouseEvent e)
 		{
 			btn = e.getButton(); //押されてるボタンをメモ
-			if(btn == e.BUTTON1)
+			if(btn == MouseEvent.BUTTON1)
 			{
 				prevPos = e.getPoint(); //移動前のマウス座標を取得
 			}
