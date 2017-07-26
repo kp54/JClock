@@ -45,7 +45,7 @@ public class ClockPanel extends JPanel
 	public void paint(Graphics g)
 	{
 		Graphics2D g2 = (Graphics2D)g;
-		super.setOpaque(false); //背景を透明に
+		super.setOpaque(false);
 		super.paint(g);
 
 		int rs = (int)(scale*180);
@@ -70,15 +70,23 @@ public class ClockPanel extends JPanel
 		th += tm/12;
 
 		g.clearRect(0,0,400,400);
-		g2.setStroke(new BasicStroke(2.0f)); //線の太さを変更
-
+		
+		g2.setStroke(new BasicStroke((float)(2.0f*scale))); //文字盤の描画
 		g.setColor(new Color(255,255,255,(int)(255*opacity)));
 		g.fillOval(center.x-rc,center.y-rc,rc*2,rc*2);
 		g.setColor(new Color(0,0,0,255));
 		g.drawOval(center.x-rc,center.y-rc,rc*2,rc*2);
-
+		
+		g2.setStroke(new BasicStroke((float)(3.0f*scale))); //3,6,9,12時の目盛り
+		g.drawLine(center.x-rc,center.y, (int)(center.x-0.9*rc),center.y);
+		g.drawLine((int)(center.x+0.9*rc),center.y, center.x+rc,center.y);
+		g.drawLine(center.x,center.y-rc,center.x,(int)(center.y-0.9*rc));
+		g.drawLine(center.x,(int)(center.y+0.9*rc),center.x,center.y+rc);
+		
+		g2.setStroke(new BasicStroke((float)(2.0f*scale)));
 		g.drawLine(center.x,center.y,(int)(rs*Math.cos(ts))+center.x,(int)(rs*Math.sin(ts))+center.y);
 		g.drawLine(center.x,center.y,(int)(rm*Math.cos(tm))+center.x,(int)(rm*Math.sin(tm))+center.y);
+		g2.setStroke(new BasicStroke((float)(4.0f*scale))); //時針だけ太く
 		g.drawLine(center.x,center.y,(int)(rh*Math.cos(th))+center.x,(int)(rh*Math.sin(th))+center.y);
 	}
 
