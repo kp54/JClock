@@ -16,6 +16,7 @@ public class Main
 		FrameMouseListener frameMouseListener = new FrameMouseListener();
 		MenuActionListener menuActionListener = new MenuActionListener();
 		OpacitySubmenuActionListener opacitySubmenuActionListener = new OpacitySubmenuActionListener();
+		SizeSubmenuActionListener sizeSubmenuActionListener = new SizeSubmenuActionListener();
 		popupMenu = new JPopupMenu();
 		JMenuItem closeMenuItem = new JMenuItem("Close");
 		JCheckBoxMenuItem alwaysOnTopCBMenuItem = new JCheckBoxMenuItem("Always on top");
@@ -26,17 +27,22 @@ public class Main
 		JRadioButtonMenuItem opacity2RBMenuItem = new JRadioButtonMenuItem("50%");
 		JRadioButtonMenuItem opacity3RBMenuItem = new JRadioButtonMenuItem("75%");
 		JRadioButtonMenuItem opacity4RBMenuItem = new JRadioButtonMenuItem("100%");
+		JMenu sizeSubmenu = new JMenu("Size");
+		ButtonGroup sizeRBGroup = new ButtonGroup();
+		JRadioButtonMenuItem size0RBMenuItem = new JRadioButtonMenuItem("Small");
+		JRadioButtonMenuItem size1RBMenuItem = new JRadioButtonMenuItem("Middle");
+		JRadioButtonMenuItem size2RBMenuItem = new JRadioButtonMenuItem("Large");
 		frame = new JFrame();
 		
 		frame.setName("frame");
 		frame.setTitle("Clock");
-		frame.setSize(400,400);
-		frame.setUndecorated(true); //フレームを消す
-		frame.setBackground(new Color(0,0,0,0)); //RGBA
+		frame.setSize(600,600);
+		frame.setUndecorated(true);
+		frame.setBackground(new Color(0,0,0,0));
 		frame.setAlwaysOnTop(true);
 		
 		clockPanel.setScale(200);
-		clockPanel.setCenter(200,200);
+		clockPanel.setCenter(300,300);
 		clockPanel.setOpacity(0.25);
 		
 		frame.add(clockPanel);
@@ -68,16 +74,30 @@ public class Main
 		
 		opacity1RBMenuItem.setSelected(true);
 		
+		size0RBMenuItem.addActionListener(sizeSubmenuActionListener);
+		size1RBMenuItem.addActionListener(sizeSubmenuActionListener);
+		size2RBMenuItem.addActionListener(sizeSubmenuActionListener);
+		
+		sizeRBGroup.add(size0RBMenuItem);
+		sizeRBGroup.add(size1RBMenuItem);
+		sizeRBGroup.add(size2RBMenuItem);
+		
+		sizeSubmenu.add(size0RBMenuItem);
+		sizeSubmenu.add(size1RBMenuItem);
+		sizeSubmenu.add(size2RBMenuItem);
+		
+		size1RBMenuItem.setSelected(true);
+		
 		popupMenu.add(alwaysOnTopCBMenuItem);
 		popupMenu.add(opacitySubmenu);
+		popupMenu.add(sizeSubmenu);
 		popupMenu.add(closeMenuItem);
 		
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
-	static class FrameMouseListener implements MouseListener,MouseMotionListener
-	//2種のMouseListenerをまとめて実装(良いのかこれ)
+	static class FrameMouseListener implements MouseListener,MouseMotionListener //2種のMouseListenerをまとめて実装(良いのかこれ)
 	{
 		private Point prevPos;
 		private int btn;
@@ -91,7 +111,7 @@ public class Main
 		{
 			if(btn == MouseEvent.BUTTON3)
 			{
-				popupMenu.show(frame,e.getX(),e.getY());//クリックされた位置にメニューを表示
+				popupMenu.show(frame,e.getX(),e.getY()); //クリックされた位置にメニューを表示
 			}
 		}
 		
@@ -115,8 +135,7 @@ public class Main
 			if(btn == MouseEvent.BUTTON1) //メモを参照 (何故かこのメソッドからgetButton()すると通らなかった)
 			{
 				Point pos = e.getPoint(); //移動後のマウス座標を取得
-				frame.setLocation(frame.getX()+pos.x-prevPos.x,frame.getY()+pos.y-prevPos.y);
-				//マウスの移動分だけ移動
+				frame.setLocation(frame.getX()+pos.x-prevPos.x,frame.getY()+pos.y-prevPos.y); //マウスの移動分だけ移動
 			}
 		}
 		
@@ -125,11 +144,6 @@ public class Main
 	
 	static class MenuActionListener implements ActionListener
 	{
-		public MenuActionListener()
-		{
-			super();
-		}
-		
 		public void actionPerformed(ActionEvent e)
 		{
 			switch(e.getActionCommand())
@@ -139,8 +153,7 @@ public class Main
 					break;
 				
 				case "Always on top":
-					frame.setAlwaysOnTop(((JCheckBoxMenuItem)(e.getSource())).getState());
-					//alwaysOnTopCBMenuItemを取得->stateを取得
+					frame.setAlwaysOnTop(((JCheckBoxMenuItem)(e.getSource())).getState()); //alwaysOnTopCBMenuItemを取得->stateを取得
 					break;
 			}
 		}
@@ -148,11 +161,6 @@ public class Main
 	
 	static class OpacitySubmenuActionListener implements ActionListener
 	{
-		public OpacitySubmenuActionListener()
-		{
-			super();
-		}
-		
 		public void actionPerformed(ActionEvent e)
 		{
 			switch(e.getActionCommand())
@@ -175,6 +183,27 @@ public class Main
 				
 				case "100%":
 					clockPanel.setOpacity(1);
+					break;
+			}
+		}
+	}
+	
+	static class SizeSubmenuActionListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			switch(e.getActionCommand())
+			{
+				case "Small":
+					clockPanel.setScale(100);
+					break;
+				
+				case "Middle":
+					clockPanel.setScale(200);
+					break;
+				
+				case "Large":
+					clockPanel.setScale(300);
 					break;
 			}
 		}
