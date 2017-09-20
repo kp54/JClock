@@ -11,4 +11,4 @@ clean:
 
 .PHONY:jar
 jar:
-	jar cvfm clock.jar manifest.mf com\kp\clock\
+	jar cvfm clock.jar manifest.mf com/kp/clock/*.class
