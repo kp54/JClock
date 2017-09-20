@@ -12,6 +12,9 @@ public class Main
 	
 	public static void main(String[] args)
 	{
+		String[] opacitySubmenuTexts = new String[]{"0%","25%","50%","75%","100%"};
+		String[] sizeSubmenuTexts = new String[]{"Small","Middle","Large"};
+		
 		clockPanel = new ClockPanel();
 		FrameMouseListener frameMouseListener = new FrameMouseListener();
 		MenuActionListener menuActionListener = new MenuActionListener();
@@ -22,16 +25,11 @@ public class Main
 		JCheckBoxMenuItem alwaysOnTopCBMenuItem = new JCheckBoxMenuItem("Always on top");
 		JMenu opacitySubmenu = new JMenu("Opacity");
 		ButtonGroup opacityRBGroup = new ButtonGroup();
-		JRadioButtonMenuItem opacity0RBMenuItem = new JRadioButtonMenuItem("0%");
-		JRadioButtonMenuItem opacity1RBMenuItem = new JRadioButtonMenuItem("25%");
-		JRadioButtonMenuItem opacity2RBMenuItem = new JRadioButtonMenuItem("50%");
-		JRadioButtonMenuItem opacity3RBMenuItem = new JRadioButtonMenuItem("75%");
-		JRadioButtonMenuItem opacity4RBMenuItem = new JRadioButtonMenuItem("100%");
+		JRadioButtonMenuItem[] opacityRBMenuItems = new JRadioButtonMenuItem [5];
 		JMenu sizeSubmenu = new JMenu("Size");
 		ButtonGroup sizeRBGroup = new ButtonGroup();
-		JRadioButtonMenuItem size0RBMenuItem = new JRadioButtonMenuItem("Small");
-		JRadioButtonMenuItem size1RBMenuItem = new JRadioButtonMenuItem("Middle");
-		JRadioButtonMenuItem size2RBMenuItem = new JRadioButtonMenuItem("Large");
+		JRadioButtonMenuItem[] sizeRBMenuItems = new JRadioButtonMenuItem [3];
+		
 		frame = new JFrame();
 		
 		frame.setName("frame");
@@ -54,39 +52,23 @@ public class Main
 		alwaysOnTopCBMenuItem.addActionListener(menuActionListener);
 		alwaysOnTopCBMenuItem.setState(true);
 		
-		opacity0RBMenuItem.addActionListener(opacitySubmenuActionListener);
-		opacity1RBMenuItem.addActionListener(opacitySubmenuActionListener);
-		opacity2RBMenuItem.addActionListener(opacitySubmenuActionListener);
-		opacity3RBMenuItem.addActionListener(opacitySubmenuActionListener);
-		opacity4RBMenuItem.addActionListener(opacitySubmenuActionListener);
+		for(int i=0;i<5;i++)
+		{
+			opacityRBMenuItems[i] = new JRadioButtonMenuItem(opacitySubmenuTexts[i]);
+			opacityRBMenuItems[i].addActionListener(opacitySubmenuActionListener);
+			opacityRBGroup.add(opacityRBMenuItems[i]);
+			opacitySubmenu.add(opacityRBMenuItems[i]);
+		}
+		opacityRBMenuItems[1].setSelected(true);
 		
-		opacityRBGroup.add(opacity0RBMenuItem);
-		opacityRBGroup.add(opacity1RBMenuItem);
-		opacityRBGroup.add(opacity2RBMenuItem);
-		opacityRBGroup.add(opacity3RBMenuItem);
-		opacityRBGroup.add(opacity4RBMenuItem);
-		
-		opacitySubmenu.add(opacity0RBMenuItem);
-		opacitySubmenu.add(opacity1RBMenuItem);
-		opacitySubmenu.add(opacity2RBMenuItem);
-		opacitySubmenu.add(opacity3RBMenuItem);
-		opacitySubmenu.add(opacity4RBMenuItem);
-		
-		opacity1RBMenuItem.setSelected(true);
-		
-		size0RBMenuItem.addActionListener(sizeSubmenuActionListener);
-		size1RBMenuItem.addActionListener(sizeSubmenuActionListener);
-		size2RBMenuItem.addActionListener(sizeSubmenuActionListener);
-		
-		sizeRBGroup.add(size0RBMenuItem);
-		sizeRBGroup.add(size1RBMenuItem);
-		sizeRBGroup.add(size2RBMenuItem);
-		
-		sizeSubmenu.add(size0RBMenuItem);
-		sizeSubmenu.add(size1RBMenuItem);
-		sizeSubmenu.add(size2RBMenuItem);
-		
-		size1RBMenuItem.setSelected(true);
+		for(int i=0;i<3;i++)
+		{
+			sizeRBMenuItems[i] = new JRadioButtonMenuItem(sizeSubmenuTexts[i]);
+			sizeRBMenuItems[i].addActionListener(sizeSubmenuActionListener);
+			sizeRBGroup.add(sizeRBMenuItems[i]);
+			sizeSubmenu.add(sizeRBMenuItems[i]);
+		}
+		sizeRBMenuItems[1].setSelected(true);
 		
 		popupMenu.add(alwaysOnTopCBMenuItem);
 		popupMenu.add(opacitySubmenu);
