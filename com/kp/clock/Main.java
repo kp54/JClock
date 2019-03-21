@@ -6,6 +6,7 @@ import java.awt.event.*;
 
 public class Main
 {
+	//なにか編集する
 	private static ClockPanel clockPanel;
 	private static JPopupMenu popupMenu;
 	private static JFrame frame;
